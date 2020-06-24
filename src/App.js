@@ -1,12 +1,19 @@
 import './App.scss';
 import { Formik, Field, Form } from 'formik';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as Yup from 'yup';
+import LoginPage from './components/login-page/login-page';
 import logo from './logo.svg';
 import React from 'react';
+import { LOGIN_PATH } from './paths';
+import routes from './routes';
 
 const App = () => {
     return (
         <div className="App">
+            <a href={LOGIN_PATH}>Login</a>
+            {routing()}
+            {/* <LoginPage />
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <p>Edit src/App.js and save to reload.</p>
@@ -19,9 +26,26 @@ const App = () => {
                     Learn React
                 </a>
                 <Formik {...getFormikProps()}></Formik>
-            </header>
+            </header> */}
         </div>
     );
+};
+
+const routing = () => {
+    return <Router>{renderRoutes()}</Router>;
+};
+
+const renderRoutes = () => {
+    return routes.map((route) => {
+        return (
+            <Route
+                key={route.path}
+                path={route.path}
+                component={route.component}
+                exact={route.exact}
+            />
+        );
+    });
 };
 
 const renderForm = (props) => {
